@@ -20,6 +20,26 @@ Vue.use(MintUi);
 Vue.prototype.$axios = Axios;
 
 
+//拦截器   
+
+Axios.interceptors.request.use(function (config) {
+  MintUi.Indicator.open({
+    text: '加载中...',
+    spinnerType: 'fading-circle'
+    // duration: 5000
+    
+  });
+  return config;
+});
+Axios.interceptors.response.use(function (config) {
+  MintUi.Indicator.close();
+  return config;
+});
+//baseURL
+Axios.defaults.baseURL = 'http://localhost:3000/';
+
+
+
 // baseURL
 Axios.defaults.baseURL = 'http://localhost:3000/users'
 
@@ -68,6 +88,13 @@ router.beforeEach((to,from,next)=>{
         return next()
       }
       // 没有登陆的话 跳转到 登陆页
+      //没有登录
+      MintUi.Toast({
+        message: '请登录',
+        position: 'middle',
+        duration: 5000
+      });
+
       next({
         name: "login"
       })

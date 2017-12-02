@@ -21,6 +21,11 @@ export default {
           this.$router.push({
             name: "music.list"
           });
+        })
+        // TODO: 
+        .catch(err=>{
+          console.log(err)
+          return this.$router.push()
         });
     }
   },
